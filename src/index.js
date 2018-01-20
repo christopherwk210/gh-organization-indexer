@@ -3,6 +3,7 @@ const index = require('./lib/indexer');
 const db = require('./lib/db');
 const express = require('express');
 var RateLimit = require('express-rate-limit');
+var cors = require('cors');
 const config = require('../config.json');
 
 var helmet = require('helmet');
@@ -13,6 +14,7 @@ app.enable('trust proxy');
 
 // Set up middlewares
 app.use(helmet());
+app.use(cors());
 app.use(new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
