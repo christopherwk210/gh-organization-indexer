@@ -1,8 +1,9 @@
 // Imports
 const index = require('./lib/indexer');
 const db = require('./lib/db');
-const config = require('../config.json');
 const express = require('express');
+var RateLimit = require('express-rate-limit');
+const config = require('../config.json');
 
 var helmet = require('helmet');
 
