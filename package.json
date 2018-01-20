@@ -1,0 +1,18 @@
+{
+  "name": "gh-organization-indexer",
+  "version": "1.0.0",
+  "description": "Node server that periodically indexes a GitHub organization's info.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Chris Anselmo <christopherwk210@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^14.0.3",
+    "express": "^4.16.2",
+    "express-rate-limit": "^2.11.0",
+    "helmet": "^3.9.0"
+  }
+}

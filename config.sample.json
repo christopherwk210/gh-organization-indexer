@@ -1,0 +1,8 @@
+{
+  "credentials": {
+    "username": "myGitHubUsername",
+    "password": "myPasswordOrToken"
+  },
+  "organization": "myGitHubOrganization",
+  "indexInterval": "1"
+}
