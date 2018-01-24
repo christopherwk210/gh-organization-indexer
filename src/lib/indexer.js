@@ -38,6 +38,20 @@ async function index(config) {
     let owner = repo.owner.login;
     let name = repo.name;
 
+    // Attempt to get latest update date
+    try {
+      let lastCommit = await octokit.repos.getCommits({
+        owner: owner,
+        repo: name,
+        page: 1,
+        per_page: 1
+      });
+
+      repo.lastUpdated = lastCommit.data[0].commit.author.date;
+    } catch(e) {
+      //
+    }
+
     console.log(`Getting additional repo information for ${name}...`);
 
     // Get readme if it exists
