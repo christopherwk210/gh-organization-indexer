@@ -29,14 +29,48 @@ async function index(config) {
   console.log('Getting repos...');
 
   // Get organization repos
-  organization.repos = await octokit.repos.getForOrg({ org: config.organization });
+  organization.repos = [];
+  let complete = false;
+  let currentPage = 1;
+
+  while (!complete) {
+    let repos = await octokit.repos.getForOrg({ org: config.organization, page: currentPage });
+
+    if (repos.data.length !== 0) {
+
+      // Parse first page
+      await parseRepos(repos.data);
+
+      // Save repos to org
+      organization.repos = organization.repos.concat(repos.data);
+
+      if (repos.data.length === 30) {
+        currentPage++;
+      } else {
+        complete = true;
+      }
+    } else {
+      complete = true;
+    }
+  }
   
   console.log('Done.');
 
-  // Get additional repo information
-  for (repo of organization.repos.data) {
+  console.log('Indexing complete.');
+
+  return organization;
+}
+
+/**
+ * Get additional repo information
+ * @param {Array<repos>} repoArray 
+ */
+async function parseRepos(repoArray) {
+  for (repo of repoArray) {
     let owner = repo.owner.login;
     let name = repo.name;
+
+    console.log(`Getting additional repo information for ${name}...`);
 
     // Attempt to get latest update date
     try {
@@ -51,8 +85,6 @@ async function index(config) {
     } catch(e) {
       //
     }
-
-    console.log(`Getting additional repo information for ${name}...`);
 
     // Get readme if it exists
     try {
@@ -83,10 +115,6 @@ async function index(config) {
 
     console.log('Done.');
   }
-
-  console.log('Indexing complete.');
-
-  return organization;
 }
 
 module.exports = index;
