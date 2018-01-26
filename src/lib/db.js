@@ -58,7 +58,7 @@ async function update(org) {
   db.members = org.members.data;
 
   // Store repos
-  db.repos = org.repos.data;
+  db.repos = org.repos;
 
   // Store DB
   await writeDB();

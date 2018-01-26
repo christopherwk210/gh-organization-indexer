@@ -72,46 +72,46 @@ async function parseRepos(repoArray) {
 
     console.log(`Getting additional repo information for ${name}...`);
 
-    // Attempt to get latest update date
-    try {
-      let lastCommit = await octokit.repos.getCommits({
-        owner: owner,
-        repo: name,
-        page: 1,
-        per_page: 1
-      });
+    // // Attempt to get latest update date
+    // try {
+    //   let lastCommit = await octokit.repos.getCommits({
+    //     owner: owner,
+    //     repo: name,
+    //     page: 1,
+    //     per_page: 1
+    //   });
 
-      repo.lastUpdated = lastCommit.data[0].commit.author.date;
-    } catch(e) {
-      //
-    }
+    //   repo.lastUpdated = lastCommit.data[0].commit.author.date;
+    // } catch(e) {
+    //   //
+    // }
 
-    // Get readme if it exists
-    try {
-      repo.readme = await octokit.repos.getReadme({
-        owner: owner,
-        repo: name
-      });
-    } catch(e) {
-      // console.log(e)
-    }
+    // // Get readme if it exists
+    // try {
+    //   repo.readme = await octokit.repos.getReadme({
+    //     owner: owner,
+    //     repo: name
+    //   });
+    // } catch(e) {
+    //   // console.log(e)
+    // }
 
-    // Parse readme
-    if (repo.readme) {
-      repo.readme = repo.readme.data.content;
-    }
+    // // Parse readme
+    // if (repo.readme) {
+    //   repo.readme = repo.readme.data.content;
+    // }
 
-    // Get topics
-    repo.topics = await octokit.repos.getTopics({
-      owner: owner,
-      repo: name
-    });
+    // // Get topics
+    // repo.topics = await octokit.repos.getTopics({
+    //   owner: owner,
+    //   repo: name
+    // });
 
-    // Get contributors
-    repo.contributors = await octokit.repos.getContributors({
-      owner: owner,
-      repo: name
-    });
+    // // Get contributors
+    // repo.contributors = await octokit.repos.getContributors({
+    //   owner: owner,
+    //   repo: name
+    // });
 
     console.log('Done.');
   }
